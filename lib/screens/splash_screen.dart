@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import './home_screen.dart';
+import 'login_screen.dart';
 
 class SplashScreen extends StatelessWidget {
 
-  void goToHome(BuildContext context) {
+  void goToLogin(BuildContext context) {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => HomeScreen()),
+      MaterialPageRoute(builder: (context) => LoginScreen()),
     );
   }
 
@@ -40,7 +40,7 @@ class SplashScreen extends StatelessWidget {
       bottomNavigationBar: Padding(
         padding: EdgeInsets.all(16),
         child: FilledButton(
-          onPressed: () => goToHome(context),
+          onPressed: () => goToLogin(context),
           child: Text('Get Started'),
         ),
       ),
