@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import './confirmation_screen.dart';
 
 class PaymentScreen extends StatelessWidget {
+  final Map<String, dynamic> ticket;
+
+  const PaymentScreen({super.key, required this.ticket});
 
   void goToConfirmation(BuildContext context) {
     Navigator.push(
@@ -13,9 +16,7 @@ class PaymentScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Center(child: Text('Payment')),
-      ),
+      appBar: AppBar(title: Center(child: Text('Payment'))),
       body: Padding(
         padding: EdgeInsets.all(16),
         child: Center(child: Text('Payment Screen')),
