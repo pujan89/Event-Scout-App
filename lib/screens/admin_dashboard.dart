@@ -99,7 +99,7 @@ class AdminDashboardScreen extends StatelessWidget {
       width: 150,
       padding: EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.blue.shade100,
+        color: const Color.fromRGBO(187, 222, 251, 1),
         borderRadius: BorderRadius.circular(12),
       ),
       child: Column(
