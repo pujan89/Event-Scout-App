@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'home_screen.dart';
+import '../screens/admin_dashboard.dart';
+import '../services/database_helper.dart';
 
 class LoginScreen extends StatelessWidget {
   LoginScreen({super.key});
@@ -7,11 +8,29 @@ class LoginScreen extends StatelessWidget {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
-  void loginUser(BuildContext context) {
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (context) => HomeScreen()),
-    );
+  void loginUser(BuildContext context) async {
+    String email = emailController.text;
+    String password = passwordController.text;
+
+    try {
+      var admin = await DatabaseHelper.loginAdmin(email, password);
+
+      if (admin != null) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => AdminDashboardScreen()),
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("Admin email or password is wrong")),
+        );
+      }
+    } catch (e) {
+      print("Login error: $e");
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Database error happened")),
+      );
+    }
   }
 
   @override
@@ -22,7 +41,7 @@ class LoginScreen extends StatelessWidget {
         backgroundColor: Colors.white,
         elevation: 0,
         centerTitle: true,
-        title:  Text(
+        title: Text(
           "Login Screen",
           style: TextStyle(
             color: Colors.black,
@@ -34,7 +53,7 @@ class LoginScreen extends StatelessWidget {
       body: Center(
         child: Container(
           width: 320,
-          padding:  EdgeInsets.all(20),
+          padding: EdgeInsets.all(20),
           decoration: BoxDecoration(
             color: Colors.white,
             border: Border.all(color: Colors.black54, width: 2),
@@ -43,16 +62,15 @@ class LoginScreen extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-               SizedBox(height: 20),
-               Text(
+              SizedBox(height: 20),
+              Text(
                 "Login",
                 style: TextStyle(
                   fontSize: 30,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-               SizedBox(height: 30),
-
+              SizedBox(height: 30),
               Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
@@ -63,19 +81,17 @@ class LoginScreen extends StatelessWidget {
                   ),
                 ),
               ),
-               SizedBox(height: 10),
+              SizedBox(height: 10),
               TextField(
                 controller: emailController,
                 decoration: InputDecoration(
-                  hintText: "user@example.com",
+                  hintText: "admin@gmail.com",
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
                   ),
                 ),
               ),
-
-               SizedBox(height: 20),
-
+              SizedBox(height: 20),
               Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
@@ -86,38 +102,24 @@ class LoginScreen extends StatelessWidget {
                   ),
                 ),
               ),
-               SizedBox(height: 10),
+              SizedBox(height: 10),
               TextField(
                 controller: passwordController,
-                obscureText: true, // Hidden password
+                obscureText: true,
                 decoration: InputDecoration(
-                  hintText: "........",
+                  hintText: "1234",
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(12),
                   ),
                 ),
               ),
-
-               SizedBox(height: 30),
-
+              SizedBox(height: 30),
               SizedBox(
                 width: double.infinity,
                 height: 50,
                 child: ElevatedButton(
                   onPressed: () => loginUser(context),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.blue,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                  ),
-                  child:  Text(
-                    "Login",
-                    style: TextStyle(
-                      fontSize: 20,
-                      color: Colors.white,
-                    ),
-                  ),
+                  child: Text("Login"),
                 ),
               ),
             ],

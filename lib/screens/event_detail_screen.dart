@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
-import './ticket_comp_screen.dart';
+import 'ticket_comp_screen.dart';
 
 class EventDetailScreen extends StatelessWidget {
+  final Map<String, dynamic> event;
+
+  const EventDetailScreen({super.key, required this.event});
 
   void goToCompare(BuildContext context) {
     Navigator.push(
@@ -14,17 +17,43 @@ class EventDetailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Center(child: Text('Event Details')),
+        title: const Center(child: Text('Event Details')),
       ),
       body: Padding(
-        padding: EdgeInsets.all(16),
-        child: Center(child: Text('Event Detail Screen')),
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              event['name'],
+              style: const TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 15),
+            Text(
+              'Location: ${event['location']}',
+              style: const TextStyle(fontSize: 18),
+            ),
+            const SizedBox(height: 10),
+            Text(
+              'Date: ${event['date']}',
+              style: const TextStyle(fontSize: 18),
+            ),
+            const SizedBox(height: 10),
+            Text(
+              'Description: ${event['description']}',
+              style: const TextStyle(fontSize: 18),
+            ),
+          ],
+        ),
       ),
       bottomNavigationBar: Padding(
-        padding: EdgeInsets.all(16),
+        padding: const EdgeInsets.all(16),
         child: FilledButton(
           onPressed: () => goToCompare(context),
-          child: Text('Compare Tickets'),
+          child: const Text('Compare Tickets'),
         ),
       ),
     );
