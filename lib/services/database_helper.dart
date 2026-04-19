@@ -238,7 +238,7 @@ class DatabaseHelper {
       'purchased_at': purchasedAt,
     });
   }
-  // ✅ Check if event already exists
+  
 static Future<bool> eventExists(String name, String eventDate) async {
   Database db = await getDatabase();
   List<Map<String, dynamic>> result = await db.query(
@@ -249,6 +249,7 @@ static Future<bool> eventExists(String name, String eventDate) async {
   return result.isNotEmpty;
 }
 
+//seatgeek integration
 static Future<void> saveSeatGeekEvent({
   required String name,
   required String location,

@@ -4,8 +4,7 @@ import 'database_helper.dart';
 
 class SeatGeekService {
   static const String _baseUrl = 'https://api.seatgeek.com/2';
-  static const String _clientId = 'YOUR_CLIENT_ID'; // replace this
-
+  static const String _clientId = '';
 
   static Future<void> fetchAndStoreEvents(String query) async {
     final url = Uri.parse(
@@ -22,7 +21,6 @@ class SeatGeekService {
 
     for (var event in events) {
       try {
-       
         if (event['datetime_local'] == null) continue;
 
         String name = event['title'] ?? 'Unknown Event';
@@ -51,7 +49,6 @@ class SeatGeekService {
             ? (event['stats']['average_price'] as num).toDouble()
             : 50.0;
 
-        
         bool exists = await DatabaseHelper.eventExists(name, eventDate);
 
         if (!exists) {
