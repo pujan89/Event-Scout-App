@@ -238,6 +238,38 @@ class DatabaseHelper {
       'purchased_at': purchasedAt,
     });
   }
+  // ✅ Check if event already exists
+static Future<bool> eventExists(String name, String eventDate) async {
+  Database db = await getDatabase();
+  List<Map<String, dynamic>> result = await db.query(
+    'events',
+    where: 'name = ? AND event_date = ?',
+    whereArgs: [name, eventDate],
+  );
+  return result.isNotEmpty;
+}
+
+static Future<void> saveSeatGeekEvent({
+  required String name,
+  required String location,
+  required String eventDate,
+  required String displayDate,
+  required String description,
+  required String imageUrl,
+  required double price,
+}) async {
+  Database db = await getDatabase();
+
+  await db.insert('events', {
+    'name': name,
+    'location': location,
+    'date': displayDate,
+    'event_date': eventDate,
+    'description': description,
+    'image_url': imageUrl,
+    'ticketmaster_price': price, // reused column
+  });
+}
 
   static Future<List<Map<String, dynamic>>> getPurchasedTickets(
       String userEmail) async {
